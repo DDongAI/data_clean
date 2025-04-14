@@ -1,4 +1,4 @@
-version: '1.0'
+version: '3.8' # docker-compose版本
 
 services:
   data-clean-app:   # 服务名称
