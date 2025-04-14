@@ -1,0 +1,13 @@
+version: '1.0'
+
+services:
+  data-clean-app:   # 服务名称
+    build: .        # 使用当前目录下的 Dockerfile 构建镜像
+    ports:
+      - "50002:8501"  # 端口映射（主机端口:容器端口）
+    restart: unless-stopped  # 重启策略 no：不自动重启（默认） always：总是重启  on-failure：非正常退出时重启
+    volumes:
+      - .:/data_clean   # 数据卷挂载（主机路径:容器路径)
+    environment:     # 容器内环境变量
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
