@@ -6,7 +6,7 @@
  ---
 ### 项目启动
 ```angular2html
-.env文件配置到config
+.env文件配置到config文件下
 安装依赖文件requirements.txt
 ```
 

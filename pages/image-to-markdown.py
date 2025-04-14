@@ -4,16 +4,15 @@
  * @description: 使用大模型做ocr识别
 """
 
-import base64  # base64 用于处理 Base64 编码
+import base64
 
-import requests  # requests 用于发送 HTTP 请求
+import requests
 import streamlit as st
 
 from config.constant import *
 from config.entry import *
 
 
-# 这段代码定义了一个名为 vision_page 的函数，并设置了页面标题和描述，解释了 GPT-4o 的功能及其当前的限制。
 def image_to_markdown_page():
     st.title("🤖 图片识别助手")
     st.caption(
@@ -38,8 +37,8 @@ def image_to_markdown_page():
     if upload_images is not None:
         if upload_images.size > MAX_FILE_SIZE:
             st.error("The uploaded file is too large. Please upload an image smaller than 5MB.")
+            st.stop()
         else:
-            # image = Image.open(upload_images)
             bytes_data = upload_images.getvalue()
             st.image(bytes_data, caption=upload_images.name, width=200)
 
@@ -55,7 +54,6 @@ def image_to_markdown_page():
                     if bytes_data is not None:
                         base64_image = base64.b64encode(bytes_data).decode("utf-8")
                         payload = {
-                            # "model": "gpt-4o",
                             "model": MY_QWEN_VL_MODEL_NAME,
                             "messages": [
                                 {
@@ -86,7 +84,6 @@ def image_to_markdown_page():
                     else:
                         # 如果没有上传图片，则构建仅包含文本的请求负载。
                         payload = {
-                            # "model": "gpt-4o",
                             "model": MY_QWEN_VL_MODEL_NAME,
                             "messages": [
                                 {

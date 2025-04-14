@@ -7,11 +7,12 @@ import base64
 import io
 
 import requests
+import streamlit as st
 from PIL import Image
 
+from config.constant import *
 from config.entry import *
 from tools.image import *
-from config.constant import *
 
 __all__ = ["image2md"]
 
@@ -26,7 +27,9 @@ def image2md(image_path: str, prompt: str) -> str:
     bytes_data = None
     if image is not None:
         if analyze_image(image_path).size > MAX_FILE_SIZE:
-            print("文件过大")
+            print("图片文件过大")
+            st.error("pdf中每页内容过多，请重新上传")
+            st.stop()
         else:
             # 使用BytesIO获取图像的二进制数据
             bytes_data = io.BytesIO()
@@ -43,7 +46,6 @@ def image2md(image_path: str, prompt: str) -> str:
         if bytes_data is not None:
             base64_image = base64.b64encode(bytes_data).decode("utf-8")
             payload = {
-                # "model": "gpt-4o",
                 "model": MY_QWEN_VL_MODEL_NAME,
                 "messages": [
                     {
@@ -74,7 +76,6 @@ def image2md(image_path: str, prompt: str) -> str:
         else:
             # 如果没有上传图片，则构建仅包含文本的请求负载。
             payload = {
-                # "model": "gpt-4o",
                 "model": MY_QWEN_VL_MODEL_NAME,
                 "messages": [
                     {
