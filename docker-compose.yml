@@ -1,5 +1,3 @@
-version: '3.8' # docker-compose版本
-
 services:
   data-clean-app:   # 服务名称
     build: .        # 使用当前目录下的 Dockerfile 构建镜像
